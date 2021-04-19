@@ -39,7 +39,7 @@ public class PhoneBook {
 			s.nextLine();
 			
 			switch (func) {
-			case 1: this.addContact(); break;
+			case 1: this.userAddContact(); break;
 			case 2: this.deleteContact(); break;
 			case 3: this.print(); break;
 			case 4: this.findByName(); break;
@@ -56,14 +56,13 @@ public class PhoneBook {
 		s.close();
 	}
 	
-	public boolean addContact() {
+	public boolean userAddContact() {
 		System.out.println("Name:");
 		String name = s.nextLine();
 		System.out.println("Phone Number:");
 		String phoneNumber = s.nextLine();
 		Contact c = new Contact(name, phoneNumber);
-		if (!this.contacts.contains(c)) {
-			contacts.add(c);
+		if (addContact(new Contact(name, phoneNumber))) {
 			System.out.println("Added successfully!");
 			return true;
 		}
@@ -73,12 +72,19 @@ public class PhoneBook {
 		}
 	}
 	
+	public boolean addContact(Contact c) {
+		if (this.contacts.contains(c))
+			return false;
+		return this.contacts.add(c);
+	}
+	
 	public boolean deleteContact() {
 		System.out.println("Name:");
 		String name = s.nextLine();
 		for (Contact c : contacts){
-			if (c.getName().equals(name) && contacts.remove(c)) {
+			if (c.getName().equalsIgnoreCase(name) && contacts.remove(c)) {
 				System.out.println("Deleted successfully!");
+				//TODO: delete from other apps
 				return true;
 			}
 		}
@@ -94,18 +100,18 @@ public class PhoneBook {
 	public boolean findByName() {
 		System.out.println("Name:");
 		String name = s.nextLine();
-		int counter = 0;
-		for (Contact c : contacts){
+		for (Contact c : this.contacts){
 			if (c.getName().equalsIgnoreCase(name)) {
 				System.out.println(c);
-				counter++;
+				return true;
 			}
-		}
-		if (counter == 0) {
-			System.out.println("Not Found!");
-			return false;
-		}
-		return true;
+		}		
+		System.out.println("Not Found!");
+		return false;
+	}
+	
+	public boolean isExist(Contact c) {
+		return this.contacts.contains(c);
 	}
 	
 	public void sortByName() {
@@ -123,7 +129,7 @@ public class PhoneBook {
             if (!newList.contains(c))
                 newList.add(c);
         this.contacts = newList;
-        System.out.println("Removed successfully!");
+        System.out.println("Duplicates removed successfully!");
 	}
 	
 	public void reverseList() {
@@ -183,6 +189,7 @@ public class PhoneBook {
 			}
 			myReader.close();
 			System.out.println("Successfully load!");
+			removeDuplicates();
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found!");
 			e.printStackTrace();
