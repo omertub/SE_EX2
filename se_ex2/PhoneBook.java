@@ -9,12 +9,13 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class PhoneBook {
-	
 	private ArrayList<Contact> contacts;
+	private MobilePhone phone;
 	private static Scanner s;
 	
-	public PhoneBook() {
+	public PhoneBook(MobilePhone phone) {
 		this.contacts = new ArrayList<Contact>();
+		this.phone = phone;
 	}
 	
 	public void menu() {
@@ -97,18 +98,26 @@ public class PhoneBook {
 			System.out.println(c);
 	}
 	
-	public boolean findByName() {
-		System.out.println("Name:");
-		String name = s.nextLine();
-		for (Contact c : this.contacts){
-			if (c.getName().equalsIgnoreCase(name)) {
-				System.out.println(c);
-				return true;
-			}
-		}		
-		System.out.println("Not Found!");
-		return false;
-	}
+    public Contact getContactByName(String name) {
+        for (Contact c : this.contacts) {
+            if (c.getName().equalsIgnoreCase(name)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    public boolean findByName() {
+        System.out.println("Name:");
+        String name = s.nextLine();
+        Contact c = getContactByName(name);
+        if (c != null) {
+            System.out.println(c);
+            return true;
+        }
+        System.out.println("Not Found!");
+        return false;
+    }
 	
 	public boolean isExist(Contact c) {
 		return this.contacts.contains(c);

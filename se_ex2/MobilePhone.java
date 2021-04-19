@@ -6,14 +6,14 @@ public class MobilePhone {
 	
 	private PhoneBook pb;
 	private SmsManager sms;
-	private Media media;
-	private Diary diary;
+	private MediaManager media;
+	private Calander calander;
 	
 	public MobilePhone() {
-		this.pb = new PhoneBook();
-		this.sms = new SmsManager();
-		this.media = new Media();
-		this.cal = new Calander();
+		this.pb = new PhoneBook(this);
+		this.sms = new SmsManager(this);
+		this.media = new MediaManager();
+		this.calander = new Calander();
 	}
 	
 	public void menu() {
@@ -21,10 +21,10 @@ public class MobilePhone {
 		int exit = 0;
 		while (exit == 0) {
 			System.out.println("********************Menu********************");
-			System.out.println("1. Open phone book");
-			System.out.println("2. Open messages");
-			System.out.println("3. Open media player");
-			System.out.println("4. Open diary");
+			System.out.println("1. Open Phone Book");
+			System.out.println("2. Open SMS");
+			System.out.println("3. Open Media Player");
+			System.out.println("4. Open Calander");
 			System.out.println("5. Print all");
 			System.out.println("6. Exit");
 			System.out.println("********************************************");
@@ -36,17 +36,35 @@ public class MobilePhone {
 			case 1: this.pb.menu(); break;
 			case 2: this.sms.menu(); break;
 			case 3: this.media.menu(); break;
-			case 4: this.cal.menu(); break;
+			case 4: this.calander.menu(); break;
 			case 5:
 				this.pb.print();
-				this.sms.print();
+				this.sms.printAll();
 				this.media.print();
-				this.diary.print(); break;
+				this.calander.print(); break;
 			case 6: exit++; break;
 			default: System.out.println("Not valid!"); break;
 			}
 		}
 		s.close();
 	}
+	
+
+
+    public PhoneBook getPb() {
+        return pb;
+    }
+
+    public SmsManager getSms() {
+        return sms;
+    }
+
+    public MediaManager getMedia() {
+        return media;
+    }
+
+    public Calander getCalander() {
+        return calander;
+    }
 	
 }
