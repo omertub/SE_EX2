@@ -5,19 +5,19 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Scanner;
 
-public class SmsManager implements Application{
+public class SmsManager extends ContactApplication{
     private HashMap<Contact, LinkedList<String>> conversations;
-    private MobilePhone phone;
 
     // Constructor
     public SmsManager(MobilePhone phone) {
+        super(phone);
         conversations = new HashMap<Contact, LinkedList<String>>();
-        this.phone = phone;
     }
 
     // (1) Add conversation
-    public void addEntry(Contact c, String s) {
+    public void addEntry(Contact c, String s, Boolean incoming) {
         LinkedList<String> conversation = conversations.get(c);
+        s = (incoming? c.getName() + ": " : "Me: ") +  s;
         if (conversation == null) {
             conversation = new LinkedList<String>();
             conversations.put(c, conversation);
@@ -33,6 +33,7 @@ public class SmsManager implements Application{
 
     // (3) Print conversation
     public void printConversation (Contact c) {
+        System.out.println(c + ":");
         System.out.println(conversations.get(c));
     }
 
@@ -82,7 +83,9 @@ public class SmsManager implements Application{
                 c = askForContactName();
                 System.out.println("Message:");
                 msg = s.nextLine();
-                addEntry(c, msg);
+                System.out.println("Incoming message? [y/n]");
+                String incoming = s.nextLine();
+                addEntry(c, msg, (incoming == "y"));
                 break;
             case 2:
                 c = askForContactName();
@@ -114,6 +117,6 @@ public class SmsManager implements Application{
         System.out.println("Contact Name:");
         String name = s.nextLine();
         s.close();
-        return phone.getPb().getContactByName(name);
+        return super.getPhone().getPb().getContactByName(name);
     }
 }

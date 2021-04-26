@@ -6,14 +6,14 @@ public class MobilePhone {
 	
 	private PhoneBook pb;
 	private SmsManager sms;
-	private MediaManager media;
-	private Calander calander;
+	private MediaPlayer media;
+	private Calendar calendar;
 	
 	public MobilePhone() {
 		this.pb = new PhoneBook(this);
 		this.sms = new SmsManager(this);
-		this.media = new MediaManager();
-		this.calander = new Calander();
+		this.media = new MediaPlayer();
+		this.calendar = new Calendar(this);
 	}
 	
 	public void menu() {
@@ -36,12 +36,12 @@ public class MobilePhone {
 			case 1: this.pb.menu(); break;
 			case 2: this.sms.menu(); break;
 			case 3: this.media.menu(); break;
-			case 4: this.calander.menu(); break;
+			case 4: this.calendar.menu(); break;
 			case 5:
-				this.pb.print();
+				this.pb.printAll();
 				this.sms.printAll();
-				this.media.print();
-				this.calander.print(); break;
+				this.media.printAll();
+				this.calendar.printAll(); break;
 			case 6: exit++; break;
 			default: System.out.println("Not valid!"); break;
 			}
@@ -59,12 +59,12 @@ public class MobilePhone {
         return sms;
     }
 
-    public MediaManager getMedia() {
+    public MediaPlayer getMedia() {
         return media;
     }
 
-    public Calander getCalander() {
-        return calander;
+    public Calendar getCalendar() {
+        return calendar;
     }
 	
 }
