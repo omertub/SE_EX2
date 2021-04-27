@@ -24,6 +24,7 @@ public class TestMobilePhone {
 
 
 	private static void testSms(MobilePhone phone) {
+		System.out.println("\n********************* SMS TEST *********************");
         testCreateContacts(phone);
 		SmsManager sms = phone.getSms();
 		Random rand = new Random();
