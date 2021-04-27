@@ -5,16 +5,35 @@ import java.util.Scanner;
 
 // MediaPlayer application.
 public class MediaPlayer implements Application {
+	
+	
+	///////////////////// Container //////////////////////////////////////////
+	
     // We choose to implement the Media list using an ArrayList data structure.
-    private ArrayList<Media> mediaList;
-
-    // play application, thanks to the Interface inheritance easy to implement.
-    public void play(Media media_file) {
-        media_file.play();
+    private ArrayList<Media> mediaList = new ArrayList<Media>();
+    //////////////////////////////////////////////////////////////////////////
+    private static Scanner s;
+    ///////////////////// Scanner ////////////////////////////////////////////
+    
+    //////////////////////////////////////////////////////////////////////////
+    
+    //////////////////////////// play song by name methods //////////////////
+    public void getName() { //input from client
+    	
+        System.out.println("Please enter your media name:");
+        String m = s.nextLine();
+        playMediaByName(m);
     }
-
-    // getter.
-    public Media getMedia(String name) {
+     
+    public void playMediaByName(String m) { // using getMedia, we will get the right media object
+        Media find_m = getMedia(m);
+        if (find_m == null)
+            System.out.println(m + " not exists!");
+        else
+            find_m.play();
+    }   
+        
+    public Media getMedia(String name) { // media getter.
         for (Media m : this.mediaList) {
             if (m.getName().equalsIgnoreCase(name)) {
                 return m;
@@ -22,22 +41,9 @@ public class MediaPlayer implements Application {
         }
         return null; // if we reach this point, the media is not exist.
     }
-
-    // using getMedia, we will get the right media object
-    public void playMediaByName() {
-        Scanner s = new Scanner(System.in);
-        System.out.println("Please enter your media name:");
-        String m = s.nextLine();
-        s.nextLine();
-        Media find_m = getMedia(m);
-        if (find_m == null)
-            System.out.println(m + " not exists!");
-        else
-            find_m.play();
-        s.close();
-    }
-
-    // Play all media objects in our Media list
+    //////////////////////////////////////////////////////////////////////////
+    
+    //////////// Play all media objects in our Media list ////////////////////
     public void playAll() {
         if (this.mediaList.isEmpty()) {
             System.out.println("Media list is EMPTY!!");
@@ -47,53 +53,80 @@ public class MediaPlayer implements Application {
                 m.play();
         }
     }
+    //////////////////////////////////////////////////////////////////////////
 
+    //////////////////// add new media ///////////////////////////////////////
     // this method will use the "select" received from the user to add a new media
     // (Song/Video) to the list.
     public void newMedia(int select) {
+    	boolean valid_input = false;
         Media new_media;
-        Scanner s = new Scanner(System.in);
-
+        double length = 0;
+        String name = "";
+        
         System.out.println("please enter a Name:");
-        String name = s.nextLine();
+        name = s.nextLine();
         System.out.println("please enter length");
-        int length = s.nextInt();
-        s.nextLine();
+	    while (!valid_input) {
+            try {
+	        	length = s.nextDouble();
+	        	s.nextLine();	
+	        	valid_input = true;
+	        }
+	        catch (Exception ex) {
+		        s.nextLine();
+		        System.out.println("this is not a number! try again.");
+	        }  
+	    }
         if (select == 1) { // a song
             new_media = new Song(name, length);
         } else { // a video
             new_media = new Video(name, length);
         }
         this.mediaList.add(new_media);
-        s.close();
+      
     }
 
     // In this method we will receive a request to add media object to list.
     public void addMedia() {
-        Scanner s = new Scanner(System.in);
-        int exit = 0;
-
-        System.out.println(
-                "Hello there! what kind of new media would you like to add?\n enter '1' for a song.\n'2' for a video.\n'3' to return to menu.");
-        int select = s.nextInt();
-        s.nextLine();
-        while (exit == 0) {
-            if (select == 1 || select == 2)
+        int get_name = 1;
+        int select = 0;
+        while (get_name == 1) {
+        	System.out.println("Hello there! what kind of new media would you like to add?\nEnter:\n[1] for a song.\n[2] for a video.\n[3] to return to menu.");
+	        try {
+	            select = s.nextInt();
+		        s.nextLine();
+	        }
+	        catch (Exception ex) {
+	            System.out.println("this is not a number! goodbye!");
+	            s.nextLine();
+	            return;
+	        }        
+            if ((select == 1) || (select == 2)) {
                 newMedia(select); // the select will act as a term for newMedia method.
-            else if (select == 3)
-                exit++;
+                return;
+            }
+            else if (select == 3) {
+            	System.out.println("see you next time!"); 
+                return;
+            }
             else
                 System.out.println("Input is Not valid!\n please try again.");
         }
-        s.close();
-    }
-    
-    public void printAll() {
         
+     }
+    
+    //////////////////////////////////////////////////////////////////////////
+    
+    
+    @Override
+    public void printAll() {
+    	this.playAll();
     }
 
+    //////////////////////////////// MENU ////////////////////////////////////
     public void menu() {
-        Scanner s = new Scanner(System.in);
+    	s = new Scanner(System.in);
         int exit = 0;
         while (exit == 0) {
             System.out.println("******************MediaPlayer Menu******************");
@@ -102,17 +135,18 @@ public class MediaPlayer implements Application {
             System.out.println("3. play all Media");
             System.out.println("4. Exit");
             System.out.println("****************************************************");
+           
             int func = s.nextInt();
             s.nextLine();
 
             switch (func) {
             case 1:
                 // add new media
-                this.addMedia();
+            	this.addMedia();
                 break;
             case 2:
                 // play media
-                this.playMediaByName();
+                this.getName();
                 break;
             case 3:
                 // play all
@@ -126,7 +160,10 @@ public class MediaPlayer implements Application {
                 System.out.println("Not valid!");
                 break;
             }
+            
         }
-        s.close();
-    }
+    s.close();
+  }
+    //////////////////////////////////////////////////////////////////////////
+      
 }

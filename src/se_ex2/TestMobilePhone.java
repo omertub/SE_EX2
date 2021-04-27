@@ -9,10 +9,14 @@ public class TestMobilePhone {
         MobilePhone phone = new MobilePhone();
         //phone.menu();
         
-        testSms(phone);
+        //testSms(phone);
+        testMediaPlayer(phone);
     }
 
-
+   public static void testMediaPlayer(MobilePhone phone) {
+	   phone.menu();
+   }
+   
 	private static void testCreateContacts(MobilePhone phone) {
 		String[] Names = {"Almog","Omer","Eilon", "Yair"};
 		for (int i=0; i<4; i++) {
@@ -68,4 +72,6 @@ public class TestMobilePhone {
 		int index = new Random().nextInt(wordsAsArray.length);
 		return wordsAsArray[index];
 	}
+
+
 }
