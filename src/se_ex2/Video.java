@@ -27,7 +27,7 @@ public class Video implements Media {
 
     @Override
     public String toString() {
-        return String.format(this.name + " is now playing for " + this.length);
+        return String.format("'"+this.name + "' is now playing for " + this.length);
     }
 
     // play method for a Video.

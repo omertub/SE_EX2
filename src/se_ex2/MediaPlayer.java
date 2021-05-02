@@ -12,7 +12,7 @@ public class MediaPlayer implements Application {
     // We choose to implement the Media list using an ArrayList data structure.
     private ArrayList<Media> mediaList = new ArrayList<Media>();
     //////////////////////////////////////////////////////////////////////////
-    private static Scanner s;
+    private static Scanner s_media;
     ///////////////////// Scanner ////////////////////////////////////////////
     
     //////////////////////////////////////////////////////////////////////////
@@ -21,7 +21,7 @@ public class MediaPlayer implements Application {
     public void getName() { //input from client
     	
         System.out.println("Please enter your media name:");
-        String m = s.nextLine();
+        String m = s_media.nextLine();
         playMediaByName(m);
     }
      
@@ -65,16 +65,16 @@ public class MediaPlayer implements Application {
         String name = "";
         
         System.out.println("please enter a Name:");
-        name = s.nextLine();
+        name = s_media.nextLine();
         System.out.println("please enter length");
 	    while (!valid_input) {
             try {
-	        	length = s.nextDouble();
-	        	s.nextLine();	
+	        	length = s_media.nextDouble();
+	        	s_media.nextLine();	
 	        	valid_input = true;
 	        }
 	        catch (Exception ex) {
-		        s.nextLine();
+		        s_media.nextLine();
 		        System.out.println("this is not a number! try again.");
 	        }  
 	    }
@@ -94,12 +94,12 @@ public class MediaPlayer implements Application {
         while (get_name == 1) {
         	System.out.println("Hello there! what kind of new media would you like to add?\nEnter:\n[1] for a song.\n[2] for a video.\n[3] to return to menu.");
 	        try {
-	            select = s.nextInt();
-		        s.nextLine();
+	            select = s_media.nextInt();
+		        s_media.nextLine();
 	        }
 	        catch (Exception ex) {
 	            System.out.println("this is not a number! goodbye!");
-	            s.nextLine();
+	            s_media.nextLine();
 	            return;
 	        }        
             if ((select == 1) || (select == 2)) {
@@ -126,7 +126,8 @@ public class MediaPlayer implements Application {
 
     //////////////////////////////// MENU ////////////////////////////////////
     public void menu() {
-    	s = new Scanner(System.in);
+    	s_media = new Scanner(System.in);
+    	int func = 0;
         int exit = 0;
         while (exit == 0) {
             System.out.println("******************MediaPlayer Menu******************");
@@ -135,10 +136,14 @@ public class MediaPlayer implements Application {
             System.out.println("3. play all Media");
             System.out.println("4. Exit");
             System.out.println("****************************************************");
-           
-            int func = s.nextInt();
-            s.nextLine();
-
+	        try {
+	        	func = s_media.nextInt();
+	        	s_media.nextLine();
+	        }
+	        catch (Exception ex) {
+		        s_media.nextLine();
+		        System.out.println("this is not a number! try again.");
+	        }
             switch (func) {
             case 1:
                 // add new media
@@ -162,7 +167,7 @@ public class MediaPlayer implements Application {
             }
             
         }
-    s.close();
+       //s_media.close();
   }
     //////////////////////////////////////////////////////////////////////////
       
