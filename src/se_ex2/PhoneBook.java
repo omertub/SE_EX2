@@ -10,7 +10,6 @@ import java.util.Scanner;
 
 public class PhoneBook extends ContactApplication {
     private ArrayList<Contact> contacts;
-    private static Scanner s;
 
     public PhoneBook(MobilePhone phone) {
         super(phone);
@@ -40,16 +39,16 @@ public class PhoneBook extends ContactApplication {
 
             switch (func) {
             case 1:
-                this.userAddContact();
+                this.userAddContact(s);
                 break;
             case 2:
-                this.deleteContact();
+                this.deleteContact(s);
                 break;
             case 3:
                 this.printAll();
                 break;
             case 4:
-                this.findByName();
+                this.findByName(s);
                 break;
             case 5:
                 this.sortByName();
@@ -64,10 +63,10 @@ public class PhoneBook extends ContactApplication {
                 this.reverseList();
                 break;
             case 9:
-                this.saveToFile();
+                this.saveToFile(s);
                 break;
             case 10:
-                this.loadFile();
+                this.loadFile(s);
                 break;
             case 11:
                 exit++;
@@ -77,10 +76,9 @@ public class PhoneBook extends ContactApplication {
                 break;
             }
         }
-        s.close();
     }
 
-    public boolean userAddContact() {
+    public boolean userAddContact(Scanner s) {
         System.out.println("Name:");
         String name = s.nextLine();
         System.out.println("Phone Number:");
@@ -107,7 +105,7 @@ public class PhoneBook extends ContactApplication {
         super.getPhone().getCalendar().removeEntry(c);
     }
 
-    public boolean deleteContact() {
+    public boolean deleteContact(Scanner s) {
         System.out.println("Name:");
         String name = s.nextLine();
         for (Contact c : contacts) {
@@ -135,7 +133,7 @@ public class PhoneBook extends ContactApplication {
         return null;
     }
 
-    public boolean findByName() {
+    public boolean findByName(Scanner s) {
         System.out.println("Name:");
         String name = s.nextLine();
         Contact c = getContactByName(name);
@@ -178,7 +176,7 @@ public class PhoneBook extends ContactApplication {
         System.out.println("Reversed successfully!");
     }
 
-    public void saveToFile() {
+    public void saveToFile(Scanner s) {
         System.out.println("File name:");
         String fName = s.nextLine();
 
@@ -210,7 +208,7 @@ public class PhoneBook extends ContactApplication {
         }
     }
 
-    public void loadFile() {
+    public void loadFile(Scanner s) {
         System.out.println("File name:");
         String fName = s.nextLine();
 
