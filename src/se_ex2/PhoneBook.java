@@ -17,7 +17,6 @@ public class PhoneBook extends ContactApplication {
     }
 
     public void menu(Scanner s) {
-        s = new Scanner(System.in);
         int exit = 0;
         while (exit == 0) {
             System.out.println("********************Menu********************");
@@ -63,10 +62,10 @@ public class PhoneBook extends ContactApplication {
                 this.reverseList();
                 break;
             case 9:
-                this.saveToFile(s);
+                this.userSaveToFile(s);
                 break;
             case 10:
-                this.loadFile(s);
+                this.userLoadFile(s);
                 break;
             case 11:
                 exit++;
@@ -176,23 +175,20 @@ public class PhoneBook extends ContactApplication {
         System.out.println("Reversed successfully!");
     }
 
-    public void saveToFile(Scanner s) {
-        System.out.println("File name:");
-        String fName = s.nextLine();
-
-        File pbFile = null;
+    public boolean saveToFile(String fName) {
+    	File pbFile = null;
         try {
             pbFile = new File(fName + ".txt");
             if (!pbFile.createNewFile()) {
                 System.out.println("File already exists!");
-                return;
+                return false;
             }
         } catch (IOException e) {
             System.out.println("Error opening file!");
             e.printStackTrace();
-            return;
+            return false;
         }
-
+    	
         String text = "";
         for (Contact c : contacts)
             text = text + c.getName() + "," + c.getPhone() + "\n";
@@ -204,14 +200,18 @@ public class PhoneBook extends ContactApplication {
         } catch (IOException e) {
             System.out.println("Error writing to file!");
             e.printStackTrace();
-            return;
+            return false;
         }
+    	return true;
     }
-
-    public void loadFile(Scanner s) {
+    
+    public void userSaveToFile(Scanner s) {
         System.out.println("File name:");
         String fName = s.nextLine();
-
+        saveToFile(fName);
+    }
+    
+    public void loadFile(String fName) {
         try {
             File pbFile = new File(fName + ".txt");
             Scanner myReader = new Scanner(pbFile);
@@ -229,6 +229,12 @@ public class PhoneBook extends ContactApplication {
             System.out.println("File not found!");
             e.printStackTrace();
         }
+    }
+
+    public void userLoadFile(Scanner s) {
+        System.out.println("File name:");
+        String fName = s.nextLine();
+        loadFile(fName);
     }
 
 }

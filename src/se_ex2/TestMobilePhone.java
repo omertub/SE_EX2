@@ -9,6 +9,8 @@ public class TestMobilePhone {
         MobilePhone phone = new MobilePhone();
        
         testCreateContacts(phone);  // create 4 contacts for basic tests
+        
+        testPhoneBook(phone);
 
         /* ********************** */
         /* INSERT YOUR TESTS HERE */
@@ -16,6 +18,8 @@ public class TestMobilePhone {
         // testMediaPlayer(phone);
         
         /* ********************** */
+        
+        // after all tests do phone book remove contact
         
         // Now run interactive mode
         phone.menu();
@@ -33,6 +37,25 @@ public class TestMobilePhone {
 			phone.getPb().addContact(c);
 			Contacts[i] = c;
 		}	
+	}
+	
+	private static void testPhoneBook(MobilePhone phone) {
+		String[] Names = {"Almog","Omer","Eilon", "Yair", "yair"};
+		for (int i=0; i<5; i++) {
+			Contact c = new Contact(Names[i],Integer.toString((i+100)*500));
+			phone.getPb().addContact(c);
+		}	
+		phone.getPb().sortByName();
+		phone.getPb().reverseList();
+		phone.getPb().printAll();
+		System.out.println("Search 'Almog': " + phone.getPb().getContactByName("almog"));
+		System.out.println("Is Etni exist?: " + phone.getPb().isExist(new Contact("Etni", "12345")));
+		phone.getPb().saveToFile("MyFile");
+		System.out.println("Remove Almog...");
+		phone.getPb().removeEntry(phone.getPb().getContactByName("Almog"));
+		phone.getPb().loadFile("MyFile");
+		phone.getPb().printAll();
+		//after other tests, test removeEntry
 	}
 
 
