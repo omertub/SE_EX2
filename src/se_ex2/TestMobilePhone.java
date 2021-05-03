@@ -8,27 +8,50 @@ public class TestMobilePhone {
     public static void main(String[] args) {
         MobilePhone phone = new MobilePhone();
        
-        testCreateContacts(phone);  // create 4 contacts for basic tests
+        //testCreateContacts(phone);  // create 4 contacts for basic tests
         
-        testPhoneBook(phone);
+       // testPhoneBook(phone);
 
         /* ********************** */
         /* INSERT YOUR TESTS HERE */
-        testSms(phone);
-        // testMediaPlayer(phone);
+        //testSms(phone);
+        testMediaPlayer(phone);
         
         /* ********************** */
         
         // after all tests do phone book remove contact
         
         // Now run interactive mode
-        phone.menu();
+        //phone.menu();
 
     }
 
    public static void testMediaPlayer(MobilePhone phone) {
-	   phone.menu();
-   }
+	   MediaPlayer tbMediaPlayer = phone.getMedia();
+	   //movies
+	   String[] videoNames = {"Harry Potter and the Philosopher's Stone","Harry Potter and the Chamber of Secrets","Harry Potter and the Prisoner of Azkaban", "Harry Potter and the Goblet of Fire", "Harry Potter and the Order of the Phoenix", "Harry Potter and the Half-Blood Prince", "Harry Potter and the Deathly Hallows – Part 1", "Harry Potter and the Deathly Hallows – Part 2"};
+	   double[] videoLengths = {152,161,142,157,138,153,146,130};
+	   
+	   //songs
+	   String[] songNames = {"Enter Sandman","Sad But True", "Holier Than Thou", "The Unforgiven", "Wherever I May Roam", "	Don't Tread on Me", "Through the Never", "Nothing Else Matters", "Of Wolf and Man", "The God That Failed", "My Friend of Misery", "	The Struggle Within"};
+	  
+	   double[] songLengths = {5.5,5.24,3.47,6.27,6.44,4,4.04,6.28,4.16,5.08,6.49,3.53 };
+	   
+	//1. add new media.   
+		for (int i=0; i<videoNames.length-1; i++)
+			tbMediaPlayer.newMedia(0,videoNames[i],videoLengths[i]);
+			
+		for (int i=0; i<videoNames.length-1; i++) 
+			tbMediaPlayer.newMedia(1,songNames[i],songLengths[i]);	
+	//2. play media by name
+		tbMediaPlayer.playMediaByName("Harry Potter and the Philosopher's Stone");	// a video
+		tbMediaPlayer.playMediaByName("Sad But True"); // a song about my life
+		tbMediaPlayer.playMediaByName("bla bla"); // a media file, not exsist.	
+	//3. play all Media.
+		tbMediaPlayer.playAll(); // play all media		
+					
+	}
+	   
    
 	private static void testCreateContacts(MobilePhone phone) {
 		String[] Names = {"Almog","Omer","Eilon", "Yair"};

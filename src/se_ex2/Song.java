@@ -18,6 +18,6 @@ public class Song extends Media {
     // play method for a Song.
     @Override
     public void play() {
-        System.out.println("The song " + this.toString());
+        System.out.println("The song " + this.toString()+" Minutes");
     }
 }

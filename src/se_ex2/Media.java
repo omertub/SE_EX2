@@ -23,7 +23,6 @@ public abstract class  Media {
     public String getName() {
 		return name;
 	}
-
     // setters
 	public void setLength(double length) {
 		this.length = length;

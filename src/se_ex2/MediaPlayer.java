@@ -12,9 +12,9 @@ public class MediaPlayer implements Application {
     // We choose to implement the Media list using an ArrayList data structure.
     private ArrayList<Media> mediaList = new ArrayList<Media>();
     //////////////////////////////////////////////////////////////////////////
-    private static Scanner s_media;
+
     ///////////////////// Scanner ////////////////////////////////////////////
-    
+    private static Scanner s_media;
     //////////////////////////////////////////////////////////////////////////
     
     //////////////////////////// play song by name methods //////////////////
@@ -58,26 +58,8 @@ public class MediaPlayer implements Application {
     //////////////////// add new media ///////////////////////////////////////
     // this method will use the "select" received from the user to add a new media
     // (Song/Video) to the list.
-    public void newMedia(int select) {
-    	boolean valid_input = false;
-        Media new_media;
-        double length = 0;
-        String name = "";
-        
-        System.out.println("please enter a Name:");
-        name = s_media.nextLine();
-        System.out.println("please enter length");
-	    while (!valid_input) {
-            try {
-	        	length = s_media.nextDouble();
-	        	s_media.nextLine();	
-	        	valid_input = true;
-	        }
-	        catch (Exception ex) {
-		        s_media.nextLine();
-		        System.out.println("this is not a number! try again.");
-	        }  
-	    }
+    public void newMedia(int select, String name, double length) {
+    	Media new_media;
         if (select == 1) { // a song
             new_media = new Song(name, length);
         } else { // a video
@@ -102,8 +84,26 @@ public class MediaPlayer implements Application {
 	            s_media.nextLine();
 	            return;
 	        }        
-            if ((select == 1) || (select == 2)) {
-                newMedia(select); // the select will act as a term for newMedia method.
+            if ((select == 1) || (select == 2)) {               
+                boolean valid_input = false;
+                double length = 0;
+                String name = "";
+                
+                System.out.println("please enter a Name:");
+                name = s_media.nextLine();
+                System.out.println("please enter length");
+        	    while (!valid_input) {
+                    try {
+        	        	length = s_media.nextDouble();
+        	        	s_media.nextLine();	
+        	        	valid_input = true;
+        	        }
+        	        catch (Exception ex) {
+        		        s_media.nextLine();
+        		        System.out.println("this is not a number! try again.");
+        	        }  
+        	    }
+        	    newMedia(select,name,length); // the select will act as a term for newMedia method.    
                 return;
             }
             else if (select == 3) {
@@ -126,6 +126,7 @@ public class MediaPlayer implements Application {
 
     //////////////////////////////// MENU ////////////////////////////////////
     public void menu(Scanner s) {
+    	this.s_media = s;
     	int func = 0;
         int exit = 0;
         while (exit == 0) {
@@ -141,29 +142,30 @@ public class MediaPlayer implements Application {
 	        }
 	        catch (Exception ex) {
 		        s.nextLine();
-		        System.out.println("this is not a number! try again.");
+		        System.out.println("this is not a number!");
+		        func = 5;
 	        }
-            switch (func) {
-            case 1:
-                // add new media
-            	this.addMedia();
-                break;
-            case 2:
-                // play media
-                this.getName();
-                break;
-            case 3:
-                // play all
-                this.playAll();
-                break;
-            case 4:
-                // exit
-                exit++;
-                break;
-            default:
-                System.out.println("Not valid!");
-                break;
-            }
+	        switch (func) {
+	            case 1:
+	                // add new media
+	            	this.addMedia();
+	                break;
+	            case 2:
+	                // play media
+	                this.getName();
+	                break;
+	            case 3:
+	                // play all
+	                this.playAll();
+	                break;
+	            case 4:
+	                // exit
+	                exit++;
+	                break;
+	            default:
+	                System.out.println("Not valid!, Try again");
+	                break;
+	        }
             
         }
   }

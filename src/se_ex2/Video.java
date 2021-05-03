@@ -18,6 +18,6 @@ public class Video extends Media {
     // play method for a Video.
     @Override
     public void play() {
-        System.out.println("The video " + this.toString());
+        System.out.println("The video " + this.toString()+" Minutes");
     }
 }
