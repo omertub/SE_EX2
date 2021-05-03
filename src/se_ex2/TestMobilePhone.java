@@ -7,10 +7,19 @@ public class TestMobilePhone {
 
     public static void main(String[] args) {
         MobilePhone phone = new MobilePhone();
-        //phone.menu();
+       
+        testCreateContacts(phone);  // create 4 contacts for basic tests
+
+        /* ********************** */
+        /* INSERT YOUR TESTS HERE */
+        testSms(phone);
+        // testMediaPlayer(phone);
         
-        //testSms(phone);
-        testMediaPlayer(phone);
+        /* ********************** */
+        
+        // Now run interactive mode
+        phone.menu();
+
     }
 
    public static void testMediaPlayer(MobilePhone phone) {
@@ -29,7 +38,6 @@ public class TestMobilePhone {
 
 	private static void testSms(MobilePhone phone) {
 		System.out.println("\n********************* SMS TEST *********************");
-        testCreateContacts(phone);
 		SmsManager sms = phone.getSms();
 		Random rand = new Random();
 		Contact c;
