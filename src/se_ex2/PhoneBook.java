@@ -17,7 +17,7 @@ public class PhoneBook extends ContactApplication {
         this.contacts = new ArrayList<Contact>();
     }
 
-    public void menu() {
+    public void menu(Scanner s) {
         s = new Scanner(System.in);
         int exit = 0;
         while (exit == 0) {

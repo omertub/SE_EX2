@@ -125,8 +125,7 @@ public class MediaPlayer implements Application {
     }
 
     //////////////////////////////// MENU ////////////////////////////////////
-    public void menu() {
-    	s_media = new Scanner(System.in);
+    public void menu(Scanner s) {
     	int func = 0;
         int exit = 0;
         while (exit == 0) {
@@ -137,11 +136,11 @@ public class MediaPlayer implements Application {
             System.out.println("4. Exit");
             System.out.println("****************************************************");
 	        try {
-	        	func = s_media.nextInt();
-	        	s_media.nextLine();
+	        	func = s.nextInt();
+	        	s.nextLine();
 	        }
 	        catch (Exception ex) {
-		        s_media.nextLine();
+		        s.nextLine();
 		        System.out.println("this is not a number! try again.");
 	        }
             switch (func) {
@@ -167,7 +166,6 @@ public class MediaPlayer implements Application {
             }
             
         }
-       //s_media.close();
   }
     //////////////////////////////////////////////////////////////////////////
       

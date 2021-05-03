@@ -1,14 +1,10 @@
 package se_ex2;
 
-public class Video implements Media {
-
-    private String name;
-    private double length;
+public class Video extends Media {
 
     // CTORS and copy CTOR
     public Video(String name, double length) {
-        this.name = name;
-        this.length = length;
+        super(name,length);
     }
 
     public Video() {
@@ -16,18 +12,7 @@ public class Video implements Media {
     }
 
     public Video(Video other) {
-        this.name = other.name;
-        this.length = other.length;
-    }
-
-    // getters.
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("'"+this.name + "' is now playing for " + this.length);
+        this(other.getName(), other.getLength());
     }
 
     // play method for a Video.

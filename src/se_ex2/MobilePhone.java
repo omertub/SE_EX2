@@ -33,10 +33,10 @@ public class MobilePhone {
 			s.nextLine();
 			
 			switch (func) {
-			case 1: this.pb.menu(); break;
-			case 2: this.sms.menu(); break;
-			case 3: this.media.menu(); break;
-			case 4: this.calendar.menu(); break;
+			case 1: this.pb.menu(s); break;
+			case 2: this.sms.menu(s); break;
+			case 3: this.media.menu(s); break;
+			case 4: this.calendar.menu(s); break;
 			case 5:
 				this.pb.printAll();
 				this.sms.printAll();

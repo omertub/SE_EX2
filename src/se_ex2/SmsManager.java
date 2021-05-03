@@ -61,8 +61,7 @@ public class SmsManager extends ContactApplication{
     }
 
     @Override
-    public void menu() {
-        Scanner s = new Scanner(System.in);
+    public void menu(Scanner s) {
         int exit = 0;
         while (exit == 0) {
             System.out.println("******************SMS Menu******************");
@@ -80,7 +79,11 @@ public class SmsManager extends ContactApplication{
             Contact c;
             switch (func) {
             case 1:
-                c = askForContactName();
+                c = askForContactName(s);
+                if (c == null) {
+                    System.out.println("Contact not found in Phone Book");
+                    break;
+                }
                 System.out.println("Message:");
                 msg = s.nextLine();
                 System.out.println("Incoming message? [y/n]");
@@ -88,11 +91,11 @@ public class SmsManager extends ContactApplication{
                 addEntry(c, msg, (incoming == "y"));
                 break;
             case 2:
-                c = askForContactName();
+                c = askForContactName(s);
                 removeEntry(c);
                 break;
             case 3:
-                c = askForContactName();
+                c = askForContactName(s);
                 printConversation(c);
                 break;
             case 4: 
@@ -109,14 +112,13 @@ public class SmsManager extends ContactApplication{
             default: System.out.println("Not valid!"); break;
             }
         }
-        s.close();
     }
     
-    public Contact askForContactName() {
-        Scanner s = new Scanner(System.in);
+    public Contact askForContactName(Scanner s) {
+        //Scanner s = new Scanner(System.in);
         System.out.println("Contact Name:");
         String name = s.nextLine();
-        s.close();
+        //s.close();
         return super.getPhone().getPb().getContactByName(name);
     }
 }

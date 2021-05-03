@@ -1,5 +1,7 @@
 package se_ex2;
 
+import java.util.Scanner;
+
 public class Calendar extends ContactApplication{
 
     public Calendar(MobilePhone phone) {
@@ -14,7 +16,7 @@ public class Calendar extends ContactApplication{
     }
 
     @Override
-    public void menu() {
+    public void menu(Scanner s) {
         // TODO Auto-generated method stub
         
     }
