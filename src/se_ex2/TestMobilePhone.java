@@ -1,7 +1,7 @@
 package se_ex2;
 
 import java.util.Random;
-
+import java.util.Date;
 public class TestMobilePhone {
 	static Contact[] Contacts = new Contact[4];
 
@@ -16,6 +16,9 @@ public class TestMobilePhone {
         /* INSERT YOUR TESTS HERE */
         //testSms(phone);
         testMediaPlayer(phone);
+        testCalendar(phone);
+        testSms(phone);
+        // testMediaPlayer(phone);
         
         /* ********************** */
         
@@ -29,7 +32,7 @@ public class TestMobilePhone {
    public static void testMediaPlayer(MobilePhone phone) {
 	   MediaPlayer tbMediaPlayer = phone.getMedia();
 	   //movies
-	   String[] videoNames = {"Harry Potter and the Philosopher's Stone","Harry Potter and the Chamber of Secrets","Harry Potter and the Prisoner of Azkaban", "Harry Potter and the Goblet of Fire", "Harry Potter and the Order of the Phoenix", "Harry Potter and the Half-Blood Prince", "Harry Potter and the Deathly Hallows – Part 1", "Harry Potter and the Deathly Hallows – Part 2"};
+	   String[] videoNames = {"Harry Potter and the Philosopher's Stone","Harry Potter and the Chamber of Secrets","Harry Potter and the Prisoner of Azkaban", "Harry Potter and the Goblet of Fire", "Harry Potter and the Order of the Phoenix", "Harry Potter and the Half-Blood Prince", "Harry Potter and the Deathly Hallows ï¿½ Part 1", "Harry Potter and the Deathly Hallows ï¿½ Part 2"};
 	   double[] videoLengths = {152,161,142,157,138,153,146,130};
 	   
 	   //songs
@@ -80,7 +83,7 @@ public class TestMobilePhone {
 		phone.getPb().printAll();
 		//after other tests, test removeEntry
 	}
-
+	
 
 	private static void testSms(MobilePhone phone) {
 		System.out.println("\n********************* SMS TEST *********************");
@@ -127,5 +130,43 @@ public class TestMobilePhone {
 		return wordsAsArray[index];
 	}
 
-
+	private static void testCalendar(MobilePhone phone) {
+		System.out.println("---------------Calendar test---------------\r\n");
+        
+        Calendar C=new Calendar(phone);
+        try {
+        EventNoCon z1=new EventNoCon(new Date(4000),20,"Comment z1");
+        EventNoCon z2=new EventNoCon(new Date(88888888),20,"Comment z2");
+        EventNoCon z3=new EventNoCon(new Date(5537),20,"Comment z3");
+        EventCon y2= new EventCon(new Date(555555555),20,new Contact("other","9328473"));
+        EventCon y3= new EventCon(new Date(10000),30,new Contact("yair","9328473"));
+        EventCon y4= new EventCon(new Date(40000000),30,new Contact("other","444444"));  
+       
+        	
+        C.addEvent(z1);
+        C.addEvent(z2);
+        C.addEvent(z3);
+        C.addEvent(y2);
+        C.addEvent(y3);
+        C.addEvent(y4);
+        }
+        catch(OutOfBoundryException e){
+        	System.out.println(e.getMessage());
+        }
+        System.out.println("Print all events");
+        C.printAll();
+        Date d=new Date(6000);
+        try {
+        	C.printInDay(d.getDay());
+        }
+        catch(OutOfBoundryException e) {
+        	System.out.println(e.getMessage());
+        }
+        System.out.println("Print yair's Events:");
+        C.printConEvents(new Contact("yair","9328473"));
+        System.out.println("Clean event collisions, and print:");
+        C.cleanColl();
+        C.printAll();   
+        System.out.println("---------------Calendar test done---------------");
+	}
 }

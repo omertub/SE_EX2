@@ -5,17 +5,12 @@ import java.util.Date;
 public class EventNoCon extends Event{
 	private String comment;
 	
-	public EventNoCon(Date otherDate,int otherMin,String otherComment){
+	public EventNoCon(Date otherDate,int otherMin,String otherComment)throws OutOfBoundryException{
 		super(otherDate, otherMin);
 		this.comment=otherComment; //String is immutable
 	}
-	//copy c'tor
-//	public EventNoCon(EventNoCon other) {
-//		super((Event) other);
-//		this.comment=other.getComment();
-//	}
 	//default c'tor
-	public EventNoCon() {
+	public EventNoCon()throws OutOfBoundryException {
 		super();
 		this.comment="no comment";
 	}
@@ -43,9 +38,6 @@ public class EventNoCon extends Event{
 		return this.getComment().equals(copy.getComment())
 				&&this.getDate().equals(copy.getDate())
 				&& this.getMin()==copy.getMin();
-	}
-	public boolean belongsToComment(String other) {
-		return this.getComment().equals(other);
 	}
 	
 }

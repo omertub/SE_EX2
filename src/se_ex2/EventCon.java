@@ -6,17 +6,14 @@ public class EventCon extends Event{
 	private Contact con;
 	
 	//constructor
-	public EventCon(Date otherDate,int otherMin,Contact otherCon) {
+	public EventCon(Date otherDate,int otherMin,Contact otherCon)
+			throws NullPointerException,OutOfBoundryException {
 		super(otherDate, otherMin);
-		Contact conCopy=new Contact(otherCon);
-		this.con=conCopy;
+		if(otherCon==null) {
+			throw new NullPointerException();
+		}
+		this.con=otherCon;
 	}
-  //copy constructor, probably unnecessary
-//	public EventCon(EventCon other) {
-//		super(other.getDate(), other.getMin());
-//		Contact conCopy=new Contact(other.getContact());
-//		this.con=conCopy;
-//	}
 	
 	//get
 	public Contact getContact() {
@@ -34,15 +31,12 @@ public class EventCon extends Event{
 
 	@Override
 	public boolean equals(Object obj) {
-		//first we check if this and obj point to the same object
 		if(this==obj) {
 			return true;
 		}
-		//secondly we check if obj is even the correct object
 		if(!(obj instanceof EventCon)) {
 			return false;
 		}
-		//lastly we know that obj is an EventCon, so we cast it to EventCon and compare values
 		EventCon c= (EventCon) obj;
 		
 		return this.getContact().equals(c.getContact())
