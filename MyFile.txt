@@ -1,4 +1,0 @@
-Yair,51500
-Omer,50500
-Eilon,51000
-Almog,50000
