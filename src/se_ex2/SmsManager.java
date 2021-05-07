@@ -39,6 +39,7 @@ public class SmsManager extends ContactApplication{
 
     // (4) Search sentence in any of the conversations
     public void searchSentence(String s) {
+    	Boolean found = false;
         ListIterator<String> iter;
         LinkedList<String> conversation;
         for (HashMap.Entry<Contact, LinkedList<String>> entry : conversations.entrySet()) {
@@ -47,10 +48,14 @@ public class SmsManager extends ContactApplication{
             while (iter.hasNext()) {
                 String str = iter.next();
                 if (str.contains(s)) {
-                    System.out.println(entry.getKey());
+                	found = true;
+                    System.out.println("Found in:" + entry.getKey());
                     break;
                 }
             }
+        }
+        if (!found) {
+            System.out.println(s + " not found\n");
         }
     }
 
